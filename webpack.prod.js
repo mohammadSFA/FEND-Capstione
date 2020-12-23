@@ -24,8 +24,28 @@ module.exports = {
                 loader: "babel-loader"
             },
             {
-                test: /\.scss$/,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+                test: /\.(scss)$/,
+                use: [
+                  {
+                    loader: MiniCssExtractPlugin.loader
+                  }, {
+                    loader: 'css-loader'
+                  }, {
+                    // PostCSS loader because bootstrap requires it
+                    loader: 'postcss-loader',
+                    options: {
+                      postcssOptions: {
+                        // Autoprefixer, used mainly because bootstrap requires it
+                        plugins: function () {
+                          return [
+                            require('autoprefixer')
+                          ]
+                        }
+                      }
+                    }
+                  }, {
+                    // compiles Sass to CSS
+                    loader: 'sass-loader'}]
             }
         ]
     },
