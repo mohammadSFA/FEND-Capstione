@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="head-master">
+        <h1 id="title">Let's Travel!</h1>
+    </div>
+    <div id="inputs-block">
+        <form>
+            <label for="location">Where do you plan on going?</label>
+            <input type="text" id="location">
+            <label for="departure">Departure Date</label>
+            <input type="text" id="departure" class="datepicker">
+            <label for="return">Return Date</label>
+            <input type="text" id="return" class="datepicker">
+            <input type="submit" id="submit">
+        </form>
+    </div>
+    <div id="outputs-block">
+        <!-- Idea, dynamically create a div that contains all the information, and append it. 
+        Make it so the data is cached even when the site restarts -->
+        <div id="entry1" class="">
+            <div id="img1"></div>
+            <div id="info1"></div>
+        </div>
+    </div>
+    <footer>
+    </footer>
+    
+</body>
+</html>
