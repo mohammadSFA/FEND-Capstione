@@ -9,3 +9,5 @@ import './styles/styles.scss'
 //     var elems = document.querySelectorAll('.datepicker');
 //     var instances = M.Datepicker.init(elems, options);
 //   });
+
+import { getLatLon } from "./js/app";
