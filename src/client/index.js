@@ -10,4 +10,12 @@ import './styles/styles.scss'
 //     var instances = M.Datepicker.init(elems, options);
 //   });
 
-import { getLatLon, getDays, getWeather, appRunner } from "./js/app";
+import { getLatLon, getWeather, appRunner } from "./js/app";
+import { getDays } from "./js/date";
+
+export {
+    getLatLon,
+    getWeather,
+    getDays,
+    appRunner
+}

@@ -14,29 +14,12 @@ const getLatLon = async (location)=>{
 
 // Find Date: Subtract current timestamp - 1 day timestamp by (received date timestamp). 
 // Or convert timestap into whole days, using math.floor, then if days are larger than specific number, make a call for now or later.
-function getDays(departure, returnValue) {
-    // Current time
-    const now = new Date()
 
-    // Departue and return times
-    const departureDate = new Date(departure)
-    const returnDate = new Date(returnValue)
-
-    // Unix Timestamp (in milliseconds)
-    const nowUnix = now.getTime()
-    const departureDateUnix = departureDate.getTime()
-    const returnDateUnix = returnDate.getTime()
-
-    // Unix Timestamp converted into days (ignoring remainder)
-    const today = Math.floor(nowUnix / (1000 * 60 * 60 * 24))
-    const departureDay = Math.floor(departureDateUnix / (1000 * 60 * 60 * 24))
-    const returnDay = Math.floor(returnDateUnix / (1000 * 60 * 60 * 24))
-
-    // Finally, subtract the two to find how many days until the flight departure, and length of trip
-    const daysAway = departureDay - today
-    const lengthOfTrip = returnDay - departureDay
-    const days = {daysAway, lengthOfTrip}
-    return days
+const getPixabay = async (location) => {
+    const imgFetch = await fetch(`https://pixabay.com/api/?key=19653548-3c423f2925b070067e1793b2a&q=${location}&image_type=photo`)
+    const imgData = await imgFetch.json()
+    const imgURL = imgData.hits[0].webformatURL
+    return imgURL
 }
 
 const getWeather = async (lat, lon, days)=>{
@@ -56,19 +39,19 @@ function appRunner(event) {
     const departure = document.getElementById('departure').value
     const returnValue = document.getElementById('returnDate').value
 
-    const daysData = getDays(departure, returnValue)
+    const daysData = Client.getDays(departure, returnValue)
 
     getLatLon(location)
     .then((latlon)=>{
+        getPixabay(location)
         if (daysData.daysAway <= 16) {
             getWeather(latlon.lat, latlon.lon, daysData.daysAway)
-
         }
     })
 
 }
 
-export { getLatLon, getWeather, getDays, appRunner }
+export { getLatLon, getWeather, appRunner }
 
 
 
