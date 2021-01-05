@@ -17,17 +17,16 @@ module.exports = {
         minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
     },
     module: {
-        rules: [
+      rules: [
             {
                 test: '/\.js$/',
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
             {
-                test: /\.scss$/,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
-            }
-        ]
+                test: /\.(scss)$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+            }]
     },
     plugins: [
         new HtmlWebPackPlugin({
