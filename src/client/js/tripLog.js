@@ -1,7 +1,8 @@
-// Declaring Global Constants
-const outputsBlock = document.getElementById('outputs-block')
+const bodyParser = require("body-parser");
 
 function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTrip) {
+    const outputsBlock = document.getElementById('outputs-block')
+
     // Create Div that contains the trip log
     const newDiv = document.createElement("div");
     newDiv.classList.add('trip-log')
@@ -33,13 +34,14 @@ function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTr
     const weatherText = document.createElement('h4')
     weatherText.innerText = `Weather: ${weather} degrees Celcius`
 
-    // Append all elements to infoDiv
+    // Appending elements to their corresponding parents
     infoDiv.appendChild(destination)
     infoDiv.appendChild(dates)
     infoDiv.appendChild(triplength)
     infoDiv.appendChild(weatherText)
 
-    // Append img and infoDiv to the parent newDiv
     newDiv.appendChild(img)
     newDiv.appendChild(infoDiv)
+
+    outputsBlock.appendChild(newDiv)
 }
