@@ -7,10 +7,12 @@ function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTr
     newDiv.classList.add('trip-log')
 
     // Create Child Elements (image, information (location, weather, departure date, return date, length of stay)) inside the created div
-    const img = document.createTextNode(`<img src= "${imageURL}" class= "img">`)
+    const img = document.createElement("img")
+    img.setAttribute('src', imageURL)
     const infoDiv = document.createElement("div")
 
     // Within infoDiv, create elements for location, weather, departure date, return date, and length of stay
+    // Destination
     const destination = document.createElement('h3')
     destination.innerText = `Your trip to ${location}`
 
@@ -23,5 +25,21 @@ function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTr
     dates.appendChild(departureDate)
     dates.appendChild(returnDate)
 
+    // Length of stay
+    const triplength = document.createElement('h5')
+    triplength.innerText = `Length of stay: ${lengthOfTrip} days`
 
+    // Weather
+    const weatherText = document.createElement('h4')
+    weatherText.innerText = `Weather: ${weather} degrees Celcius`
+
+    // Append all elements to infoDiv
+    infoDiv.appendChild(destination)
+    infoDiv.appendChild(dates)
+    infoDiv.appendChild(triplength)
+    infoDiv.appendChild(weatherText)
+
+    // Append img and infoDiv to the parent newDiv
+    newDiv.appendChild(img)
+    newDiv.appendChild(infoDiv)
 }
