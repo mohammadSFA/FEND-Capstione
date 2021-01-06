@@ -27,21 +27,29 @@ function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTr
     dates.appendChild(returnDate)
 
     // Length of stay
-    const triplength = document.createElement('h5')
+    const triplength = document.createElement('h6')
     triplength.innerText = `Length of stay: ${lengthOfTrip} days`
 
-    // Weather
-    const weatherText = document.createElement('h4')
-    weatherText.innerText = `Weather: ${weather} degrees Celcius`
+    // Weather, passed through an if statement in case weather is not given (when daysAway is greater than 16)
+    if (weather !== null) {
+        const weatherText = document.createElement('h6')
+        weatherText.innerText = `Weather: ${weather} degrees Celcius`
 
-    // Appending elements to their corresponding parents
-    infoDiv.appendChild(destination)
-    infoDiv.appendChild(dates)
-    infoDiv.appendChild(triplength)
-    infoDiv.appendChild(weatherText)
+        // Appending elements to their corresponding parents
+        infoDiv.appendChild(destination)
+        infoDiv.appendChild(dates)
+        infoDiv.appendChild(triplength)
+        infoDiv.appendChild(weatherText)
+    } else {
+        infoDiv.appendChild(destination)
+        infoDiv.appendChild(dates)
+        infoDiv.appendChild(triplength)
+    }
 
     newDiv.appendChild(img)
     newDiv.appendChild(infoDiv)
 
     outputsBlock.appendChild(newDiv)
 }
+
+export { tripLog }

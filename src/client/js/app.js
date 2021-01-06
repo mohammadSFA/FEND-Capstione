@@ -23,11 +23,13 @@ const getPixabay = async (location) => {
 }
 
 const getWeather = async (lat, lon, days)=>{
-    const req = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&key=${weatherbitKey}&days=${days}`)
+    const daysAdjusted = days + 1
+    const req = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&key=${weatherbitKey}&days=${daysAdjusted}`)
     try {
         const data = await req.json()
-        console.log(data);
-        return data
+        const weatherData = data.data[days].temp
+        console.log(weatherData);
+        return weatherData
     } catch (error) {
         console.log(error);
     }
@@ -40,13 +42,23 @@ function appRunner(event) {
     const returnValue = document.getElementById('returnDate').value
 
     const daysData = Client.getDays(departure, returnValue)
+    const daysAway = daysData.daysAway
+    const lengthOfTrip = daysData.lengthOfTrip
 
     getLatLon(location)
     .then((latlon)=>{
-        getPixabay(location)
-        if (daysData.daysAway <= 16) {
-            getWeather(latlon.lat, latlon.lon, daysData.daysAway)
+        const lat = latlon.lat
+        const lon = latlon.lon
+        const imageURL = getPixabay(location)
+        console.log(imageURL);
+        if (daysAway < 16) {
+            const weather = getWeather(lat, lon, daysAway)
+            console.log(weather);
+            Client.tripLog(location, imageURL, weather, departure, returnValue, lengthOfTrip)
+        } else {
+            Client.tripLog(location, imageURL, departure, returnValue, lengthOfTrip)
         }
+
     })
 
 }

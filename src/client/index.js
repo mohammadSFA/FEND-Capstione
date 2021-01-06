@@ -12,10 +12,12 @@ import './styles/styles.scss'
 
 import { getLatLon, getWeather, appRunner } from "./js/app";
 import { getDays } from "./js/date";
+import { tripLog } from "./js/tripLog";
 
 export {
     getLatLon,
     getWeather,
     getDays,
+    tripLog,
     appRunner
 }
