@@ -1,16 +1,5 @@
 const weatherbitKey = 'a5399f03d9e541e0b009904825f85e54'
 
-const getLatLon = async (location)=>{
-    const req = await fetch(`http://api.geonames.org/searchJSON?q=${location}&maxRows=10&username=travellingapiapp`)
-    try {
-        const data = await req.json()
-        console.log(data);
-        let latlon = {lat: data.geonames[0].lat, lon: data.geonames[0].lng}
-        return latlon
-    } catch (error) {
-        console.log("error", error);
-    }
-}
 
 // Find Date: Subtract current timestamp - 1 day timestamp by (received date timestamp). 
 // Or convert timestap into whole days, using math.floor, then if days are larger than specific number, make a call for now or later.
@@ -46,17 +35,15 @@ function appRunner(event) {
     const lengthOfTrip = daysData.lengthOfTrip
 
     getLatLon(location)
-    .then((latlon)=>{
-        const lat = latlon.lat
-        const lon = latlon.lon
-        const imageURL = getPixabay(location)
+    getPixabay(location)
+    .then((latlon, imageURL)=>{
         console.log(imageURL);
+        const {lat, lon} = latlon
         if (daysAway < 16) {
-            const weather = getWeather(lat, lon, daysAway)
-            console.log(weather);
-            Client.tripLog(location, imageURL, weather, departure, returnValue, lengthOfTrip)
-        } else {
-            Client.tripLog(location, imageURL, departure, returnValue, lengthOfTrip)
+            getWeather(lat, lon, daysAway)
+            .then((weatherData, imageURL)=>{
+                Client.tripLog(location, imageURL, weatherData, departure, returnValue, lengthOfTrip)
+            })
         }
 
     })
