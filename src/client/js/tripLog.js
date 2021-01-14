@@ -30,22 +30,20 @@ const tripLog = async function(location, imageURL, weather, departure, returnVal
     const triplength = document.createElement('h6')
     triplength.innerText = `Length of stay: ${lengthOfTrip} days`
 
+    const weatherText = document.createElement('h6')
     // Weather, passed through an if statement in case weather is not given (when daysAway is greater than 16)
     if (weather !== null) {
-        const weatherText = document.createElement('h6')
         weatherText.innerText = `Weather: ${weather} degrees Celcius`
-
-        // Appending elements to their corresponding parents
-        infoDiv.appendChild(destination)
-        infoDiv.appendChild(dates)
-        infoDiv.appendChild(triplength)
-        infoDiv.appendChild(weatherText)
     } else {
-        infoDiv.appendChild(destination)
-        infoDiv.appendChild(dates)
-        infoDiv.appendChild(triplength)
+        weatherText.innerText = `Weather information for this trip does not exist`
     }
 
+    // Appending elements to their corresponding parents
+    infoDiv.appendChild(destination)
+    infoDiv.appendChild(dates)
+    infoDiv.appendChild(triplength)
+    infoDiv.appendChild(weatherText)
+    
     newDiv.appendChild(img)
     newDiv.appendChild(infoDiv)
 

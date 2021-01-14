@@ -33,3 +33,19 @@ const getPixabay = async (location) => {
     const imgURL = await imgData.hits[0].webformatURL
     return await imgURL
 }
+
+async function apiRunner(location, departure, returnValue) {
+    let object = {}
+
+    const daysData = Client.getDays(departure, returnValue)
+    const { daysAway, lengthOfTrip } = daysData
+
+    getLatLon(location).then(({lat, lon}) => {
+        if (daysAway < 16) {
+            getWeather(lat, lon, daysAway).then((weatherData) => {
+                object.temperature = weatherData
+            })
+        }
+    })
+
+}
