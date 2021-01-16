@@ -6,8 +6,8 @@ const getLatLon = async (location)=>{
     const req = await fetch(`http://api.geonames.org/searchJSON?q=${location}&maxRows=10&username=travellingapiapp`)
     try {
         const data = await req.json()
-        console.log(data);
         const latlon = await {lat: data.geonames[0].lat, lon: data.geonames[0].lng}
+        console.log(latlon);
         return await latlon
     } catch (error) {
         console.log("error", error);
@@ -20,8 +20,7 @@ const getWeather = async (lat, lon, days)=>{
     try {
         const data = await req.json()
         const weatherData = data.data[days].temp
-        console.log(weatherData);
-        return weatherData
+        return await weatherData
     } catch (error) {
         console.log(error);
     }
@@ -31,29 +30,28 @@ const getPixabay = async (location) => {
     const imgFetch = await fetch(`https://pixabay.com/api/?key=19653548-3c423f2925b070067e1793b2a&q=${location}&image_type=photo`)
     const imgData = await imgFetch.json()
     const imgURL = await imgData.hits[0].webformatURL
+    console.log(imgURL);
     return await imgURL
 }
 
-async function apiRunner(location, departure, returnValue) {
-    let object = {}
-
-    const daysData = Client.getDays(departure, returnValue)
-    const { daysAway, lengthOfTrip } = daysData
-    object.lengthOfTrip = lengthOfTrip
+async function apiRunner(location, daysAway) {
+    let obj = {}
 
     getLatLon(location).then(({lat, lon}) => {
         if (daysAway < 16) {
             getWeather(lat, lon, daysAway).then((weatherData) => {
-                object.temperature = weatherData
+                console.log(weatherData);
+                obj.temperature = weatherData
             })
         }
     })
 
     getPixabay(location).then((imgURL)=> {
-        object.imgURL = imgURL
+        obj.imgURL = imgURL
     })
 
-    return object
+    console.log(obj);
+    return obj
 }
 
 module.exports = { apiRunner }
