@@ -10,7 +10,7 @@ import './styles/styles.scss'
 //     var instances = M.Datepicker.init(elems, options);
 //   });
 
-import { appRunner, apiGet } from "./js/app";
+import { appRunner, apiPostData } from "./js/app";
 import { getDays } from "./js/date";
 import { tripLog } from "./js/tripLog";
 
@@ -18,5 +18,5 @@ export {
     getDays,
     tripLog,
     appRunner,
-    apiGet,
+    apiPostData,
 }

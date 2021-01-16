@@ -1,5 +1,12 @@
-async function apiGet(location, daysAway) {
-    const req = await fetch(`localhost:8001/api?location=${location}&daysAway=${daysAway}`)
+async function apiPostData(url = '', data = {}) {
+    const req = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
     try {
         const apiData = await req.json()
         console.log(apiData);
@@ -18,7 +25,8 @@ function appRunner(event) {
     const daysData = Client.getDays(departure, returnValue)
     const { daysAway, lengthOfTrip } = daysData
 
-    apiGet(location, daysAway).then((obj)=>{
+    apiPostData(`http://localhost:8001/api`, {location: location, daysAway: daysAway})
+    .then((obj)=>{
         const { temperature, imgURL } = obj
         if (temperature || temperature == 0) {
             Client.tripLog(location, imgURL, departure, returnValue, lengthOfTrip, temperature)
@@ -28,7 +36,7 @@ function appRunner(event) {
     })
 }
 
-export { appRunner, apiGet }
+export { appRunner, apiPostData }
 
 
 

@@ -1,9 +1,13 @@
 const fetch = require('node-fetch')
+const dotenv = require('dotenv')
+dotenv.config()
 
-const weatherbitKey = 'a5399f03d9e541e0b009904825f85e54'
+const weatherbitKey = process.env.WEATHERBIT_KEY
+const geonamesUser = process.env.GEONAMES_USER
+const pixabayKey = process.env.PIXABAY_KEY
 
 const getLatLon = async (location)=>{
-    const req = await fetch(`http://api.geonames.org/searchJSON?q=${location}&maxRows=10&username=travellingapiapp`)
+    const req = await fetch(`http://api.geonames.org/searchJSON?q=${location}&maxRows=10&username=${geonamesUser}`)
     try {
         const data = await req.json()
         const latlon = await {lat: data.geonames[0].lat, lon: data.geonames[0].lng}
@@ -27,7 +31,7 @@ const getWeather = async (lat, lon, days)=>{
 }
 
 const getPixabay = async (location) => {
-    const imgFetch = await fetch(`https://pixabay.com/api/?key=19653548-3c423f2925b070067e1793b2a&q=${location}&image_type=photo`)
+    const imgFetch = await fetch(`https://pixabay.com/api/?key=${pixabayKey}a&q=${location}&image_type=photo`)
     const imgData = await imgFetch.json()
     const imgURL = await imgData.hits[0].webformatURL
     console.log(imgURL);
