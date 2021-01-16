@@ -1,6 +1,6 @@
 const bodyParser = require("body-parser");
 
-const tripLog = async function(location, imageURL, weather, departure, returnValue, lengthOfTrip) {
+const tripLog = async function(location, imageURL, departure, returnValue, lengthOfTrip, weather) {
     const outputsBlock = document.getElementById('outputs-block')
 
     // Create Div that contains the trip log
@@ -43,7 +43,7 @@ const tripLog = async function(location, imageURL, weather, departure, returnVal
     infoDiv.appendChild(dates)
     infoDiv.appendChild(triplength)
     infoDiv.appendChild(weatherText)
-    
+
     newDiv.appendChild(img)
     newDiv.appendChild(infoDiv)
 

@@ -39,6 +39,7 @@ async function apiRunner(location, departure, returnValue) {
 
     const daysData = Client.getDays(departure, returnValue)
     const { daysAway, lengthOfTrip } = daysData
+    object.lengthOfTrip = lengthOfTrip
 
     getLatLon(location).then(({lat, lon}) => {
         if (daysAway < 16) {
@@ -48,4 +49,11 @@ async function apiRunner(location, departure, returnValue) {
         }
     })
 
+    getPixabay(location).then((imgURL)=> {
+        object.imgURL = imgURL
+    })
+
+    return object
 }
+
+module.exports = { apiRunner }
