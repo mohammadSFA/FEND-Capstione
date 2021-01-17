@@ -14,7 +14,7 @@ const tripLog = async function(location, imageURL, departure, returnValue, lengt
 
     // Within infoDiv, create elements for location, weather, departure date, return date, and length of stay
     // Destination
-    const destination = document.createElement('h3')
+    const destination = document.createElement('h4')
     destination.innerText = `Your trip to ${location}`
 
     // Departure and return, made into an unordered list
@@ -32,7 +32,7 @@ const tripLog = async function(location, imageURL, departure, returnValue, lengt
 
     const weatherText = document.createElement('h6')
     // Weather, passed through an if statement in case weather is not given (when daysAway is greater than 16)
-    if (weather !== null) {
+    if (weather || weather == 0) {
         weatherText.innerText = `Weather: ${weather} degrees Celcius`
     } else {
         weatherText.innerText = `Weather information for this trip does not exist`

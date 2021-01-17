@@ -22,18 +22,22 @@ function appRunner(event) {
     const departure = document.getElementById('departure').value
     const returnValue = document.getElementById('returnDate').value
 
-    const daysData = Client.getDays(departure, returnValue)
-    const { daysAway, lengthOfTrip } = daysData
+    if (Client.checkDate(departure, returnValue)) {
+        const daysData = Client.getDays(departure, returnValue)
+        const { daysAway, lengthOfTrip } = daysData
 
-    apiPostData(`http://localhost:8001/api`, {location: location, daysAway: daysAway})
-    .then((obj)=>{
-        const { temperature, imgURL } = obj
-        if (temperature || temperature == 0) {
-            Client.tripLog(location, imgURL, departure, returnValue, lengthOfTrip, temperature)
-        } else {
-            Client.tripLog(location, imgURL, departure, returnValue, lengthOfTrip)
-        }
-    })
+        apiPostData(`http://localhost:8001/api`, {location: location, daysAway: daysAway})
+        .then((obj)=>{
+            const { temperature, imgURL } = obj
+            if ( !temperature && temperature !== 0) {
+                Client.tripLog(location, imgURL, departure, returnValue, lengthOfTrip)
+            } else {
+                Client.tripLog(location, imgURL, departure, returnValue, lengthOfTrip, temperature)
+            }
+        })
+    } else {
+        alert('Error: Invalid date inputted')
+    }
 }
 
 export { appRunner, apiPostData }

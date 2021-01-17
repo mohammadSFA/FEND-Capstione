@@ -39,19 +39,19 @@ const getPixabay = async (location) => {
 }
 
 async function apiRunner(location, daysAway) {
-    let obj = {}
+    const obj = { temperature, imageURL }
 
     getLatLon(location).then(({lat, lon}) => {
         if (daysAway < 16) {
-            getWeather(lat, lon, daysAway).then((weatherData) => {
+            getWeather(lat, lon, daysAway).then((weatherData, obj) => {
                 console.log(weatherData);
-                obj.temperature = weatherData
+                obj[temperature] = weatherData
             })
         }
     })
 
-    getPixabay(location).then((imgURL)=> {
-        obj.imgURL = imgURL
+    getPixabay(location).then((imgURL, obj)=> {
+        obj[imageURL] = imgURL
     })
 
     console.log(obj);
