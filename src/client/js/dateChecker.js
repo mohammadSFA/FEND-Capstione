@@ -1,7 +1,7 @@
 export function checkDate(departure, returnValue) {
     console.log(':: Testing the Date :: ' + departure + '  ' + returnValue);
     // Regex that checks if input matches date format
-    let regex = RegExp('(\d{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])')
+    let regex = /(\d{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])/
 
     if (regex.test(departure) && regex.test(returnValue)) {
         // If passed, then check if returnValue is larger than departure, and if departure is larger than current date
