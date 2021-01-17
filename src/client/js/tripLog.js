@@ -1,6 +1,6 @@
 const bodyParser = require("body-parser");
 
-function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTrip) {
+const tripLog = async function(location, imageURL, departure, returnValue, lengthOfTrip, weather) {
     const outputsBlock = document.getElementById('outputs-block')
 
     // Create Div that contains the trip log
@@ -27,12 +27,16 @@ function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTr
     dates.appendChild(returnDate)
 
     // Length of stay
-    const triplength = document.createElement('h5')
+    const triplength = document.createElement('h6')
     triplength.innerText = `Length of stay: ${lengthOfTrip} days`
 
-    // Weather
-    const weatherText = document.createElement('h4')
-    weatherText.innerText = `Weather: ${weather} degrees Celcius`
+    const weatherText = document.createElement('h6')
+    // Weather, passed through an if statement in case weather is not given (when daysAway is greater than 16)
+    if (weather !== null) {
+        weatherText.innerText = `Weather: ${weather} degrees Celcius`
+    } else {
+        weatherText.innerText = `Weather information for this trip does not exist`
+    }
 
     // Appending elements to their corresponding parents
     infoDiv.appendChild(destination)
@@ -45,3 +49,5 @@ function tripLog(location, imageURL, weather, departure, returnValue, lengthOfTr
 
     outputsBlock.appendChild(newDiv)
 }
+
+export { tripLog }
