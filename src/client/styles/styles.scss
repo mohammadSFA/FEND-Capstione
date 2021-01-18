@@ -2,10 +2,11 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #title {
-    margin-left: 100px;
+    margin: 10%;
 }
 
 #inputs-block {
@@ -14,12 +15,40 @@
     justify-content: center;
     align-items: center;
     background-color: aliceblue;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin-left: 100px;
-    margin-right: 100px;
+    padding: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 
     label {
         font-size: 2vh;
+    }
+}
+
+#outputs-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 5%;
+    margin: auto;
+
+    .trip-log {
+        margin: 2%;
+        display: flex;
+        flex-direction: column;
+        max-width: 90vw;
+        background-color: aliceblue;
+        padding-top: 5%;
+        padding-bottom: 5%;
+
+        img {
+            max-width: 90%;
+            margin-left: 5%;
+        }
+
+        div {
+            margin-left: 5%;
+        }
     }
 }
