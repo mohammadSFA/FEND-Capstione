@@ -2,10 +2,12 @@ const fetch = require('node-fetch')
 const dotenv = require('dotenv')
 dotenv.config()
 
+// API Keys
 const weatherbitKey = process.env.WEATHERBIT_KEY
 const geonamesUser = process.env.GEONAMES_USER
 const pixabayKey = process.env.PIXABAY_KEY
 
+// Geonames Call
 const getLatLon = async (location)=>{
     const req = await fetch(`http://api.geonames.org/searchJSON?q=${location}&maxRows=10&username=${geonamesUser}`)
     try {
@@ -18,6 +20,7 @@ const getLatLon = async (location)=>{
     }
 }
 
+// Weatherbit Call
 const getWeather = async (lat, lon, days)=>{
     const daysAdjusted = days + 1
     const req = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&key=${weatherbitKey}&days=${daysAdjusted}`)
@@ -30,6 +33,7 @@ const getWeather = async (lat, lon, days)=>{
     }
 }
 
+// Pixabay Call
 const getPixabay = async (location) => {
     const imgFetch = await fetch(`https://pixabay.com/api/?key=${pixabayKey}a&q=${location}&image_type=photo`)
     const imgData = await imgFetch.json()
@@ -38,24 +42,31 @@ const getPixabay = async (location) => {
     return await imgURL
 }
 
+// Function that combines all of the calls
 async function apiRunner(location, daysAway) {
-    const obj = { temperature, imageURL }
+    // Empty array to store extracted data
+    let arr = []
 
-    getLatLon(location).then(({lat, lon}) => {
+    // First and second promises, Geonames call combined with Weatherbit call
+    let weatherCall = getLatLon(location).then(({lat, lon}) => {
         if (daysAway < 16) {
-            getWeather(lat, lon, daysAway).then((weatherData, obj) => {
-                console.log(weatherData);
-                obj[temperature] = weatherData
-            })
+            return getWeather(lat, lon, daysAway)
         }
+        // else {
+        //     return false
+        // }
     })
 
-    getPixabay(location).then((imgURL, obj)=> {
-        obj[imageURL] = imgURL
-    })
+    // Third promise, Pixabay call
+    let imageCall = getPixabay(location)
 
-    console.log(obj);
-    return obj
+    // Combine the promises
+    return Promise.all([weatherCall, imageCall])
+    .then((value)=> {
+        return value
+    })
+    // console.log(arr);
+    // return await arr
 }
 
 module.exports = { apiRunner }

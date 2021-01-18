@@ -20,8 +20,6 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// API Endpoint
-const data = []
 
 // Server setup for production mode
 app.use(express.static('dist'))
@@ -33,11 +31,9 @@ app.post('/api', (req, res)=> {
     const daysAway = req.body.daysAway
 
     apiRunner(location, daysAway)
-    .then((obj)=>{
-        console.log(obj);
-        data.push(obj)
-        console.log(data);
-        res.send(obj)
+    .then((arr)=>{
+        console.log(arr);
+        res.send(arr)
     })
 })
 
