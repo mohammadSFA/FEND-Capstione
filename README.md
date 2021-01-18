@@ -27,3 +27,4 @@ This project is a single-page web app that lets the user choose a location, a de
 - Clean-webpack-plugin
 - Jest
 - Mini-css-extract-plugin
+
