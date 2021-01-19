@@ -37,4 +37,6 @@ app.post('/api', (req, res)=> {
     })
 })
 
+app.get('/test', (req, res) => res.send('Test passed'))
+
 module.exports = app

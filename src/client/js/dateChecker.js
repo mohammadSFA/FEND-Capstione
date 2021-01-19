@@ -11,7 +11,7 @@ export function checkDate(departure, returnValue) {
         const returnDate = (new Date(returnValue)).getTime()
         // For invalid dates such as 30 Feb, this should still work because when the .getTime() method is passed on it,
         // it returns NaN which will fail the if conditional test. 
-        if (returnDate > departureDate && departureDate > now) {
+        if (returnDate > departureDate && departureDate >= now) {
             console.log(':: Test Passed ::');
             return true
         } else {
