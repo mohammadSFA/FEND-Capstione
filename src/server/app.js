@@ -25,15 +25,20 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('dist'))
 app.get('/', (req, res)=> res.sendFile('dist/index.html'))
 
+// API Endpoint
+const data = []
+
 // GET request from client that runs the API
 app.post('/api', (req, res)=> {
     const location = req.body.location
     const daysAway = req.body.daysAway
 
     apiRunner(location, daysAway)
-    .then((arr)=>{
-        console.log(arr);
-        res.send(arr)
+    .then((obj)=>{
+        console.log(obj);
+        data.push(obj)
+        console.log(data);
+        res.send(obj)
     })
 })
 

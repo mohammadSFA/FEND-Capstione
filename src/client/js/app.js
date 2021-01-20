@@ -29,16 +29,8 @@ function appRunner(event) {
 
         apiPostData(`http://localhost:8001/api`, {location: location, daysAway: daysAway})
         .then((value)=>{
-            // Take the array received, then define two variables (var is used since function-scope is needed)
-            var temperature
-            var imgURL
-            // Check if temperature exists. This is done for many processes because it often depends on whether weather information is available.
-            if (value.length == 2) {
-                var temperature = value[0]
-                var imgURL = value[1]
-            } else if (value.length == 1) {
-                var imgURL = value[0]
-            }
+            const { temperature, imgURL } = value
+            
             // Run the tripLog function to log the trip on the webpage.
             if ( !temperature && temperature !== 0) {
                 Client.tripLog(location, imgURL, departure, returnValue, lengthOfTrip)
@@ -55,5 +47,6 @@ function appRunner(event) {
 export { appRunner, apiPostData }
 
 
-
-document.getElementById('submit').addEventListener('click', appRunner)
+document.addEventListener('DOMContentLoaded', ()=> {
+    document.getElementById('submit').addEventListener('click', appRunner)
+})

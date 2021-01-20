@@ -35,7 +35,7 @@ const getWeather = async (lat, lon, days)=>{
 
 // Pixabay Call
 const getPixabay = async (location) => {
-    const imgFetch = await fetch(`https://pixabay.com/api/?key=${pixabayKey}a&q=${location}&image_type=photo`)
+    const imgFetch = await fetch(`https://pixabay.com/api/?key=${pixabayKey}a&q=${location}&category=places&image_type=photo`)
     const imgData = await imgFetch.json()
     const imgURL = await imgData.hits[0].webformatURL
     console.log(imgURL);
@@ -52,9 +52,6 @@ async function apiRunner(location, daysAway) {
         if (daysAway < 16) {
             return getWeather(lat, lon, daysAway)
         }
-        // else {
-        //     return false
-        // }
     })
 
     // Third promise, Pixabay call
@@ -63,10 +60,18 @@ async function apiRunner(location, daysAway) {
     // Combine the promises
     return Promise.all([weatherCall, imageCall])
     .then((value)=> {
-        return value
+        // Check if temperature exists. This is done for many processes because it often depends on whether weather information is available.
+        var obj = {}
+        if (value.length == 2) {
+            obj.location = location
+            obj.temperature = value[0]
+            obj.imgURL = value[1]
+        } else if (value.length == 1) {
+            obj.location = location
+            obj.imgURL = value[0]
+        }
+        return obj
     })
-    // console.log(arr);
-    // return await arr
 }
 
 module.exports = { apiRunner }

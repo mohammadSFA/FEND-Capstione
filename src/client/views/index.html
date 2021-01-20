@@ -15,23 +15,24 @@
             <input type="text" id="location">
             <p></p>
             <label for="departure">Departure Date</label>
-            <input type="text" id="departure" class="dateinput" placeholder="YYYY-MM-DD">
+            <input type="date" id="departure" class="dateinput" required="required">
             <p></p>
             <label for="returnDate">Return Date</label>
-            <input type="text" id="returnDate" class="dateinput" placeholder="YYYY-MM-DD">
+            <input type="date" id="returnDate" class="dateinput" required="required">
             <p></p>
             <button id="submit">Submit</button>
         </form>
     </div>
     <div id="outputs-block">
-        <!-- Idea, dynamically create a div that contains all the information, and append it. 
-        Make it so the data is cached even when the site restarts -->
-        <div id="entry1" class="trip-log">
-            <div class="img"></div>
-            <div class="info"></div>
-        </div>
     </div>
     <footer>
     </footer>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+       </script>
 </body>
 </html>
